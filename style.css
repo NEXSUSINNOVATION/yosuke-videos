@@ -7,8 +7,12 @@ body {
     background-color: transparent;
     color: #fff;
     height: 100vh;
+    overflow: hidden; /* body全体のスクロールを無効にする */
 }
 
+/*
+ * ヘッダー
+ */
 header {
     position: fixed;
     top: 0;
@@ -25,6 +29,9 @@ h1 {
     display: none;
 }
 
+/*
+ * タブ
+ */
 .tabs {
     display: flex;
     justify-content: center;
@@ -37,25 +44,23 @@ h1 {
 }
 
 /*
- * タブ（非アクティブ時）
+ * タブ（アクティブでない時）
  */
 .tab {
     flex: 0 0 calc(16.6% - 7px);
     padding: 8px 16px;
-    height: 48px; /* 縦幅→48px */
+    height: 48px;
     line-height: 2;
     font-weight: bold;
     background-color: #000;
     color: #fff;
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-right: 2px solid #fff;
-    border-bottom: none; /* 下のボーダーを削除 */
+    border: 2px solid #fff;
+    border-bottom: none;
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
     transition: 0.3s ease;
-    font-size: 18px; /* text-size→18px */
+    font-size: 18px;
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
@@ -66,18 +71,22 @@ h1 {
  * アクティブなタブ
  */
 .tab.active {
-    height: 56px; /* 縦幅→56px */
-    font-size: 20px; /* text-size→20px */
+    height: 48px;
+    font-size: 18px;
     background-color: #fff;
     color: #000;
     border: 2px solid #fff;
-    border-bottom: none; /* 下のボーダーを削除 */
+    border-bottom: none;
 }
 
+/*
+ * iframeコンテナ（スクロールをここに適用）
+ */
 .iframe-container {
-    margin-top: 100px;
+    margin-top: 100px; /* ヘッダーの高さに合わせて調整 */
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 100px); /* ヘッダーの高さ分を引いて表示領域を確保 */
+    overflow-y: auto; /* このコンテナ内のみスクロール可能にする */
 }
 
 iframe {
@@ -86,6 +95,9 @@ iframe {
     border: none;
 }
 
+/*
+ * レスポンシブデザイン
+ */
 @media (max-width: 540px) {
     header {
         padding: 15px;
