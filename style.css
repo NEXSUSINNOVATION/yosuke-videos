@@ -7,6 +7,7 @@ body {
     background-color: transparent;
     color: #fff;
     height: 100vh;
+    overflow: hidden; /* body全体のスクロールを無効にする */
 }
 
 header {
@@ -47,8 +48,10 @@ h1 {
     font-weight: bold;
     background-color: #000;
     color: #fff;
-    border: 2px solid #fff;
-    border-bottom: none;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
@@ -68,14 +71,16 @@ h1 {
     font-size: 20px;
     background-color: #fff;
     color: #000;
-    border: 2px solid #fff;
     border-bottom: none;
+    border: 2px solid #fff;
+    border-radius: 5px 5px 0 0;
 }
 
 .iframe-container {
     margin-top: 100px;
     width: 100%;
     height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
 iframe {
