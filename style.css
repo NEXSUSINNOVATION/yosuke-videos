@@ -36,8 +36,11 @@ h1 {
     background-color: transparent;
 }
 
+/*
+ * タブ（アクティブでない時）
+ */
 .tab {
-    flex: 0 0 auto;
+    flex: 1; /* 親ボックスの幅いっぱいに広げる */
     padding: 8px 16px;
     height: 48px;
     line-height: 2;
@@ -57,6 +60,9 @@ h1 {
     text-overflow: ellipsis;
 }
 
+/*
+ * アクティブなタブ
+ */
 .tab.active {
     height: 48px;
     font-size: 18px;
@@ -99,7 +105,7 @@ iframe {
         padding: 8px 15px;
         font-size: 13px;
         height: 40px;
-        flex: 0 0 auto;
+        flex: 1;
     }
     
     .iframe-container {
