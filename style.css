@@ -37,23 +37,25 @@ h1 {
 }
 
 /*
- * タブ（アクティブ・非アクティブ共通）
+ * タブ（非アクティブ時）
  */
 .tab {
     flex: 0 0 calc(16.6% - 7px);
     padding: 8px 16px;
-    height: 48px;
+    height: 48px; /* 縦幅→48px */
     line-height: 2;
     font-weight: bold;
     background-color: #000;
     color: #fff;
-    border: 2px solid #fff;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
     border-bottom: none; /* 下のボーダーを削除 */
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
     transition: 0.3s ease;
-    font-size: 18px;
+    font-size: 18px; /* text-size→18px */
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
@@ -61,13 +63,15 @@ h1 {
 }
 
 /*
- * アクティブなタブ（デザインは共通のため、ボーダー調整のみ）
+ * アクティブなタブ
  */
 .tab.active {
+    height: 56px; /* 縦幅→56px */
+    font-size: 20px; /* text-size→20px */
     background-color: #fff;
     color: #000;
     border: 2px solid #fff;
-    border-bottom: none;
+    border-bottom: none; /* 下のボーダーを削除 */
 }
 
 .iframe-container {
