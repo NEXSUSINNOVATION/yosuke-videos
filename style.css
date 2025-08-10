@@ -37,23 +37,22 @@ h1 {
 }
 
 /*
- * タブ（非アクティブ時）
+ * タブ（アクティブでない時）
  */
 .tab {
-    flex: 0 0 calc(16.6% - 7px); /* 幅→16.6% */
+    flex: 0 0 calc(16.6% - 7px);
     padding: 8px 16px;
-    height: 48px; /* 縦幅→48px */
+    height: 48px;
     line-height: 2;
     font-weight: bold;
-    background-color: transparent;
+    background-color: #000;
     color: #fff;
-    border: 2px solid transparent; /* border→上、左右のみ2px（タブで表示されていない時） */
-    border-color: rgba(255, 255, 255, 0); /* border color→transparent */
+    border: 2px solid #fff; /* ボーダーを上下左右すべてに表示 */
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
     transition: 0.3s ease;
-    font-size: 18px; /* text-size→18px */
+    font-size: 18px;
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
@@ -64,14 +63,12 @@ h1 {
  * アクティブなタブ
  */
 .tab.active {
-    height: 56px; /* 縦幅→56px */
-    font-size: 20px; /* text-size→20px */
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-right: 2px solid #fff;
-    border-bottom: none; /* border→なし */
-    border-color: #ffffff; /* border color→FFFFFF */
-    background-color: transparent;
+    height: 48px;
+    font-size: 18px;
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #fff;
+    border-bottom: none; /* 下のボーダーをなくす */
 }
 
 .iframe-container {
