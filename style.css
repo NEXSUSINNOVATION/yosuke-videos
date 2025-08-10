@@ -7,7 +7,7 @@ body {
     background-color: transparent;
     color: #fff;
     height: 100vh;
-    overflow: hidden; /* body全体のスクロールを無効にする */
+    overflow: hidden;
 }
 
 header {
@@ -33,7 +33,7 @@ h1 {
     flex-wrap: wrap;
     width: 100%;
     gap: 8px;
-    margin-bottom: 0;
+    margin-bottom: 0; /* 余白をなくす */
     background-color: transparent;
 }
 
@@ -51,7 +51,7 @@ h1 {
     border-top: 2px solid #fff;
     border-left: 2px solid #fff;
     border-right: 2px solid #fff;
-    border-bottom: 0px solid #ffffff00;
+    border-bottom: none;
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
@@ -77,9 +77,10 @@ h1 {
 }
 
 .iframe-container {
-    margin-top: 100px;
+    /* ヘッダーとタブの高さの合計をmargin-topに設定 */
+    margin-top: calc(100px + 48px); 
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - (100px + 48px));
     overflow-y: auto;
 }
 
@@ -114,7 +115,7 @@ iframe {
     }
     
     .iframe-container {
-        margin-top: 100px;
-        height: calc(100vh - 100px);
+        margin-top: calc(100px + 40px);
+        height: calc(100vh - (100px + 40px));
     }
 }
