@@ -22,10 +22,7 @@ header {
 }
 
 h1 {
-    text-align: center;
-    margin: 0 0 15px;
-    font-size: 24px;
-    color: #fff;
+    display: none; /* 「岩下ヨウスケの動画一覧」を非表示にする */
 }
 
 .tabs {
@@ -35,12 +32,11 @@ h1 {
     flex-wrap: wrap;
     width: 100%;
     gap: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 0; /* タブのすぐ下にスクロール範囲を反映させるため、余白をなくす */
     background-color: transparent;
 }
 
 .tab {
-    /* calc()を使って正確な幅を計算 */
     flex: 0 0 calc((100% - 40px) / 6);
     padding: 8px 16px;
     height: 48px;
