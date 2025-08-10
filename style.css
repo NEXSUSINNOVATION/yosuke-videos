@@ -47,10 +47,9 @@ h1 {
     height: 48px;
     line-height: 2;
     font-weight: bold;
-    border: 2px solid transparent;
-    border-top-color: #fff;
-    border-left-color: #fff;
-    border-right-color: #fff;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #fff;
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
@@ -68,16 +67,14 @@ h1 {
 .tab.active {
     height: 56px;
     font-size: 20px;
-    border: none;
+    background-color: #fff;
+    color: #000;
     border-bottom: none;
-    background-color: transparent;
 }
 
-.tab.active,
-.tab:hover {
-    color: #fff;
-}
-
+/*
+ * iframeコンテナ
+ */
 .iframe-container {
     margin-top: 100px;
     width: 100%;
