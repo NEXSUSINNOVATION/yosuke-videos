@@ -1,5 +1,5 @@
 /*
- * Global styles
+ * 全体的なスタイル
  */
 body {
     margin: 0;
@@ -17,22 +17,29 @@ header {
     width: 100%;
     background: transparent;
     z-index: 10;
-    padding-top: 20px;
+    padding-top: 20px; /* 上部の余白を保持 */
     box-shadow: none;
     box-sizing: border-box;
 }
 
-.tabs-container {
+h1 {
+    display: none;
+}
+
+.tabs {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     flex-wrap: wrap;
     width: 100%;
     gap: 8px;
-    margin-bottom: 0;
+    margin-bottom: 0; /* タブの下の余白をなくす */
     background-color: transparent;
 }
 
+/*
+ * タブ（非アクティブ時）
+ */
 .tab {
     flex: 0 0 calc(16.6% - 7px);
     padding: 8px 16px;
@@ -56,6 +63,9 @@ header {
     text-overflow: ellipsis;
 }
 
+/*
+ * アクティブなタブ
+ */
 .tab.active {
     height: 56px;
     font-size: 20px;
@@ -66,6 +76,9 @@ header {
     border-radius: 5px 5px 0 0;
 }
 
+/*
+ * iframe-containerをscroll-containerに変更
+ */
 .iframe-container {
     margin-top: calc(20px + 56px);
     width: 100%;
@@ -74,12 +87,94 @@ header {
     background-color: #000;
 }
 
+/*
+ * 動画一覧のスタイル
+ */
+.search-sort-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+}
+
+#filterInput {
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sort-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.sort-tab {
+    padding: 8px 16px;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sort-tab.active {
+    background-color: #fff;
+    color: #000;
+}
+
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.video-card {
+    flex: 0 0 calc(25% - 15px);
+    background-color: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.video-card:hover {
+    transform: scale(1.02);
+}
+
+.video-card iframe {
+    width: 100%;
+    height: 180px;
+    border: none;
+}
+
+.video-title {
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1000px) {
+    .video-container {
+        flex: 0 0 calc(50% - 10px);
+    }
+}
+
 @media (max-width: 540px) {
     header {
         padding-top: 15px;
     }
 
-    .tabs-container {
+    .tabs {
         justify-content: center;
         align-items: flex-end;
         gap: 5px;
@@ -96,5 +191,17 @@ header {
     .iframe-container {
         margin-top: calc(15px + 40px);
         height: calc(100vh - (15px + 40px));
+    }
+
+    .video-container {
+        flex: 0 0 100%;
+    }
+
+    .video-card {
+        flex: 0 0 100%;
+    }
+
+    .video-card iframe {
+        height: 200px;
     }
 }
