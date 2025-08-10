@@ -40,8 +40,8 @@ h1 {
 }
 
 .tab {
-    /* flexプロパティを調整して横幅に収まるように変更 */
-    flex: 1;
+    /* calc()を使って正確な幅を計算 */
+    flex: 0 0 calc((100% - 40px) / 6);
     padding: 8px 16px;
     height: 48px;
     line-height: 2;
@@ -101,6 +101,7 @@ iframe {
         padding: 8px 15px;
         font-size: 13px;
         height: 40px;
+        flex: 0 0 calc((100% - 25px) / 6);
     }
     
     .iframe-container {
