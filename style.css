@@ -17,8 +17,8 @@ header {
     width: 100%;
     background: transparent;
     z-index: 10;
-    padding: 0; /* paddingをなくす */
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    padding: 0;
+    box-shadow: none; /* シャドウをなくす */
     box-sizing: border-box;
 }
 
@@ -71,15 +71,15 @@ h1 {
     font-size: 20px;
     background-color: #fff;
     color: #000;
-    border: 2px solid #fff;
     border-bottom: none;
+    border: 2px solid #fff;
     border-radius: 5px 5px 0 0;
 }
 
 .iframe-container {
-    margin-top: 50px; /* タブの高さに合わせて調整 */
+    margin-top: 70px;
     width: 100%;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 70px);
     overflow-y: auto;
 }
 
@@ -92,6 +92,7 @@ iframe {
 @media (max-width: 540px) {
     header {
         padding: 0;
+        box-shadow: none;
     }
 
     h1 {
@@ -114,7 +115,7 @@ iframe {
     }
     
     .iframe-container {
-        margin-top: 50px;
-        height: calc(100vh - 50px);
+        margin-top: 70px;
+        height: calc(100vh - 70px);
     }
 }
