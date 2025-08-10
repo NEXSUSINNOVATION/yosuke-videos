@@ -1,5 +1,5 @@
 /*
- * 全体的なスタイル
+ * Global styles
  */
 body {
     margin: 0;
@@ -7,6 +7,7 @@ body {
     background-color: transparent;
     color: #fff;
     height: 100vh;
+    overflow: hidden;
 }
 
 header {
@@ -21,11 +22,7 @@ header {
     box-sizing: border-box;
 }
 
-h1 {
-    display: none;
-}
-
-.tabs {
+.tabs-container {
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -69,104 +66,35 @@ h1 {
     border-radius: 5px 5px 0 0;
 }
 
-.main-content-container {
-    padding: 20px;
-    box-sizing: border-box;
+.iframe-container {
     margin-top: calc(20px + 56px);
+    width: 100%;
     height: calc(100vh - (20px + 56px));
     overflow-y: auto;
     background-color: #000;
 }
 
-.search-sort-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-#filterInput {
-    padding: 10px;
-    width: 80%;
-    max-width: 400px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #000;
-    color: #fff;
-}
-
-.sort-tabs {
-    display: flex;
-    gap: 10px;
-}
-
-.sort-tab {
-    padding: 8px 16px;
-    background-color: #000;
-    color: #fff;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.sort-tab.active {
-    background-color: #fff;
-    color: #000;
-}
-
-.video-container {
-    display: flex; /* Flexboxに変更 */
-    flex-wrap: wrap;
-    gap: 20px; /* gapを設ける */
-    padding: 20px;
-}
-
-.video-card {
-    flex: 0 0 calc(25% - 15px); /* 4つ並ぶように幅を調整 */
-    background-color: transparent;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
-    transition: transform 0.2s ease; /* ホバー効果を滑らかにする */
-    text-decoration: none;
-    color: inherit;
-}
-
-.video-card:hover {
-    transform: scale(1.02); /* ホバー時の拡大効果 */
-}
-
-.video-card iframe {
-    width: 100%;
-    height: 180px;
-    border: none;
-}
-
-.video-title {
-    padding: 10px;
-    font-size: 14px;
-    color: #fff;
-}
-
-/* レスポンシブ対応 */
-@media (max-width: 1000px) {
-    .video-container {
-        justify-content: center;
-    }
-    .video-card {
-        flex: 0 0 calc(50% - 10px);
-    }
-}
-
 @media (max-width: 540px) {
-    .video-container {
+    header {
+        padding-top: 15px;
+    }
+
+    .tabs-container {
         justify-content: center;
+        align-items: flex-end;
+        gap: 5px;
+        margin-bottom: 0;
     }
-    .video-card {
-        flex: 0 0 100%;
+
+    .tab {
+        padding: 8px 15px;
+        font-size: 13px;
+        height: 40px;
+        flex: 0 0 calc((100% - 25px) / 6);
     }
-    iframe {
-        height: 200px;
+    
+    .iframe-container {
+        margin-top: calc(15px + 40px);
+        height: calc(100vh - (15px + 40px));
     }
 }
