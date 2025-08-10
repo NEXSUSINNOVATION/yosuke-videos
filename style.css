@@ -27,7 +27,7 @@ h1 {
 
 .tabs {
     display: flex;
-    justify-content: center; /* 中央揃えに変更 */
+    justify-content: center;
     align-items: flex-end;
     flex-wrap: wrap;
     width: 100%;
@@ -36,10 +36,11 @@ h1 {
     background-color: transparent;
 }
 
+/*
+ * タブ（アクティブでない時）
+ */
 .tab {
-    /* flexプロパティを削除し、幅をコンテンツに合わせる */
-    flex-grow: 0;
-    flex-shrink: 0;
+    flex: 0 0 auto; /* 幅をコンテンツに合わせて自動調整 */
     padding: 8px 16px;
     height: 48px;
     line-height: 2;
@@ -59,11 +60,14 @@ h1 {
     text-overflow: ellipsis;
 }
 
+/*
+ * アクティブなタブ
+ */
 .tab.active {
     height: 48px;
     font-size: 18px;
-    background-color: #000;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     border: 2px solid #fff;
     border-bottom: none;
 }
@@ -101,9 +105,7 @@ iframe {
         padding: 8px 15px;
         font-size: 13px;
         height: 40px;
-        /* flexプロパティを削除し、幅をコンテンツに合わせる */
-        flex-grow: 0;
-        flex-shrink: 0;
+        flex: 0 0 auto;
     }
     
     .iframe-container {
