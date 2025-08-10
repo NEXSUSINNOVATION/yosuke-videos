@@ -1,74 +1,96 @@
+/*
+ * 全体的なスタイル
+ */
 body {
     margin: 0;
     font-family: sans-serif;
     background-color: transparent;
     color: #fff;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.header-container {
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    z-index: 10;
+    padding-top: 20px; /* 上部の余白を保持 */
+    box-shadow: none;
+    box-sizing: border-box;
 }
 
-#playlist-title {
-    text-align: center;
-    margin: 0 0 15px;
-    font-size: 24px;
-    color: #fff;
-}
-
-.search-sort-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.search-container {
-    margin-bottom: 15px;
+h1 {
+    display: none;
 }
 
 .tabs {
     display: flex;
     justify-content: center;
+    align-items: flex-end;
     flex-wrap: wrap;
-    gap: 10px;
+    width: 100%;
+    gap: 8px;
+    margin-bottom: 0; /* タブの下の余白をなくす */
+    background-color: transparent;
 }
 
+/*
+ * タブ（アクティブでない時）
+ */
 .tab {
-    padding: 10px 20px;
-    background-color: transparent;
+    flex: 0 0 calc(16.6% - 7px);
+    padding: 8px 16px;
+    height: 48px;
+    line-height: 2;
+    font-weight: bold;
+    background-color: #000;
     color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    text-align: center;
     cursor: pointer;
     transition: 0.3s ease;
-    font-size: 14px;
-}
-
-.tab:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.tab.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-}
-
-#filterInput {
-    padding: 10px;
-    width: 80%;
-    max-width: 400px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    font-size: 18px;
     box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+/*
+ * アクティブなタブ
+ */
+.tab.active {
+    height: 56px;
+    font-size: 20px;
+    background-color: #fff;
+    color: #000;
+    border-bottom: none;
+    border: 2px solid #fff;
+    border-radius: 5px 5px 0 0;
+}
+
+/*
+ * iframeコンテナ（スクロールをここに適用）
+ */
+.iframe-container {
+    margin-top: calc(20px + 56px);
+    width: 100%;
+    height: calc(100vh - (20px + 56px));
+    overflow-y: auto;
+    background-color: #000; /* 背景色をブラックに変更 */
+}
+
+/*
+ * 動画一覧のスタイル
+ */
 .scroll-container {
-    margin-top: 20px;
     overflow-y: auto;
     padding: 20px;
     box-sizing: border-box;
@@ -79,6 +101,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
+    padding: 20px;
 }
 
 .video-card {
@@ -95,12 +118,6 @@ body {
     transform: scale(1.02);
 }
 
-iframe {
-    width: 100%;
-    height: 180px;
-    border: none;
-}
-
 .video-title {
     padding: 10px;
     font-size: 15px;
@@ -109,7 +126,15 @@ iframe {
     line-height: 1.4;
 }
 
-/* レスポンシブ対応 */
+iframe {
+    width: 100%;
+    height: 180px;
+    border: none;
+}
+
+/*
+ * レスポンシブデザイン
+ */
 @media (max-width: 1000px) {
     .video-container {
         grid-template-columns: repeat(2, 1fr);
@@ -117,9 +142,38 @@ iframe {
 }
 
 @media (max-width: 540px) {
+    header {
+        padding-top: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .tabs {
+        justify-content: center;
+        align-items: flex-end;
+        gap: 5px;
+        margin-bottom: 0;
+    }
+
+    .tab {
+        padding: 8px 15px;
+        font-size: 13px;
+        height: 40px;
+        flex: 0 0 calc((100% - 25px) / 6);
+    }
+    
+    .iframe-container {
+        margin-top: calc(15px + 40px);
+        height: calc(100vh - (15px + 40px));
+    }
+    
     .video-container {
         grid-template-columns: repeat(1, 1fr);
     }
+
     iframe {
         height: 200px;
     }
