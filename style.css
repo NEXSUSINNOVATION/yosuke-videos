@@ -18,7 +18,7 @@ header {
     background: transparent;
     z-index: 10;
     padding: 0; /* 余白をなくすため、paddingを0に */
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 0px rgba(255, 255, 255, 0.1);
     box-sizing: border-box;
 }
 
