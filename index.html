@@ -3,48 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>岩下ヨウスケの動画一覧</title>
+    <title>動画一覧</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>岩下ヨウスケの動画一覧</h1>
-        <div class="tabs">
-            <div class="tab active" data-url="https://pokepoke-list.netlify.app/">ポケポケ</div>
-            <div class="tab" data-url="https://kimetsu-list.netlify.app/">鬼滅の刃</div>
-            <div class="tab" data-url="https://horage-list.netlify.app/">ホラゲ</div>
-            <div class="tab" data-url="https://gyaruge-list.netlify.app/">ギャルゲ</div>
-            <div class="tab" data-url="https://vlog-list.netlify.app/">vlog</div>
-            <div class="tab" data-url="https://gachikoi-list.netlify.app/">ガチ恋</div>
+        <div class="tabs-container">
+            <div class="tab active" data-playlist="PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu">ポケポケ</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qiuoikIGJkgThqQJoxBxGxb">鬼滅の刃</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qiCIlUOG3mubH0WtkPiZTVq">ホラゲ</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qjEv8XBBmZxPOIrzhbDyaiZ">ギャルゲ</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qjg1OP94iGRL4h8phsb-uYa">vlog</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qiDYCgCPtTB2NrWkaZ5iVud">ガチ恋</div>
         </div>
     </header>
 
-    <div class="iframe-container">
-        <iframe
-            id="dynamic-iframe"
-            src="https://pokepoke-list.netlify.app/"
-            width="100%"
-            height="100%"
-            style="border: none;"
-            loading="eager"
-            referrerpolicy="no-referrer"
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-        ></iframe>
+    <div class="main-content-container">
+        <div class="search-sort-container">
+            <input type="text" id="filterInput" placeholder="キーワードで絞り込み">
+            <div class="sort-tabs">
+                <div class="sort-tab active" data-sort="newest">新しい順</div>
+                <div class="sort-tab" data-sort="popular">人気の動画</div>
+                <div class="sort-tab" data-sort="oldest">古い順</div>
+            </div>
+        </div>
+        <div id="videos" class="video-container">読み込み中...</div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabs = document.querySelectorAll('.tab');
-            const iframe = document.getElementById('dynamic-iframe');
+        const apiKey = 'AIzaSyDxj96_dc9nVMEb0SPsKLKvPSAVSJPLJ2Y';
+        const playlistIdMap = {
+            'pokepoke': 'PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu',
+            'kimetsu': 'PLJcsLRfvy0qiuoikIGJkgThqQJoxBxGxb',
+            'horage': 'PLJcsLRfvy0qiCIlUOG3mubH0WtkPiZTVq',
+            'gyaruge': 'PLJcsLRfvy0qjEv8XBBmZxPOIrzhbDyaiZ',
+            'vlog': 'PLJcsLRfvy0qjg1OP94iGRL4h8phsb-uYa',
+            'gachikoi': 'PLJcsLRfvy0qiDYCgCPtTB2NrWkaZ5iVud'
+        };
+        
+        let videosData = [];
+        let currentSort = 'newest';
+        let currentKeyword = '';
+        let currentPlaylistId = 'PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu';
 
-            tabs.forEach(tab => {
+        async function fetchVideos() {
+            try {
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${currentPlaylistId}&key=${apiKey}`);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                const data = await res.json();
+                videosData = data.items;
+                renderVideos();
+            } catch (error) {
+                console.error("Failed to fetch playlist items:", error);
+                document.getElementById("videos").innerHTML = "<p>動画の読み込みに失敗しました。</p>";
+            }
+        }
+
+        function renderVideos() {
+            const container = document.getElementById("videos");
+            container.innerHTML = "";
+            const filteredVideos = videosData.filter(item =>
+                item.snippet.title.toLowerCase().includes(currentKeyword.toLowerCase())
+            );
+            
+            const sortedVideos = filteredVideos.sort((a, b) => {
+                if (currentSort === 'newest') {
+                    return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
+                } else if (currentSort === 'oldest') {
+                    return new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt);
+                }
+                return 0; // 人気順は後ほど実装
+            });
+
+            sortedVideos.forEach(item => {
+                const id = item.snippet.resourceId.videoId;
+                const title = item.snippet.title;
+                const card = document.createElement("a");
+                card.href = `https://www.youtube.com/watch?v=${id}`;
+                card.target = "_blank";
+                card.className = "video-card";
+                card.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>
+                    <div class="video-title">${title}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function setupEventListeners() {
+            document.querySelectorAll('.tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     document.querySelector('.tab.active').classList.remove('active');
                     tab.classList.add('active');
-                    const url = tab.dataset.url;
-                    iframe.src = url;
+                    currentPlaylistId = tab.dataset.playlist;
+                    fetchVideos();
                 });
             });
+            
+            document.querySelectorAll('.sort-tab').forEach(sortTab => {
+                sortTab.addEventListener('click', () => {
+                    document.querySelector('.sort-tab.active').classList.remove('active');
+                    sortTab.classList.add('active');
+                    currentSort = sortTab.dataset.sort;
+                    renderVideos();
+                });
+            });
+            
+            document.getElementById('filterInput').addEventListener('input', (e) => {
+                currentKeyword = e.target.value;
+                renderVideos();
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            fetchVideos();
         });
     </script>
 </body>
