@@ -17,7 +17,7 @@ header {
     width: 100%;
     background: transparent;
     z-index: 10;
-    padding: 0 0 10px 0; /* 下の余白を調整 */
+    padding: 0; /* paddingをなくす */
     box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
     box-sizing: border-box;
 }
@@ -38,7 +38,7 @@ h1 {
 }
 
 /*
- * タブ（非アクティブ時）
+ * タブ（アクティブでない時）
  */
 .tab {
     flex: 0 0 calc(16.6% - 7px);
@@ -77,9 +77,9 @@ h1 {
 }
 
 .iframe-container {
-    margin-top: 80px; /* 余白を調整 */
+    margin-top: 50px; /* タブの高さに合わせて調整 */
     width: 100%;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 50px);
     overflow-y: auto;
 }
 
@@ -91,7 +91,7 @@ iframe {
 
 @media (max-width: 540px) {
     header {
-        padding: 0 0 10px 0;
+        padding: 0;
     }
 
     h1 {
@@ -114,7 +114,7 @@ iframe {
     }
     
     .iframe-container {
-        margin-top: 80px;
-        height: calc(100vh - 80px);
+        margin-top: 50px;
+        height: calc(100vh - 50px);
     }
 }
