@@ -84,7 +84,7 @@ h1 {
     width: 100%;
     height: calc(100vh - (20px + 56px));
     overflow-y: auto;
-    background-color: #000;
+    background-color: #ffffff;
 }
 
 /*
