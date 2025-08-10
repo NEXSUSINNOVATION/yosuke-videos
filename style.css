@@ -10,9 +10,6 @@ body {
     overflow: hidden; /* body全体のスクロールを無効にする */
 }
 
-/*
- * ヘッダー
- */
 header {
     position: fixed;
     top: 0;
@@ -29,9 +26,6 @@ h1 {
     display: none;
 }
 
-/*
- * タブ
- */
 .tabs {
     display: flex;
     justify-content: center;
@@ -47,7 +41,7 @@ h1 {
  * タブ（アクティブでない時）
  */
 .tab {
-    flex: 0 0 calc(16.6% - 7px);
+    flex: 0 0 auto; /* 幅をコンテンツに合わせて自動調整 */
     padding: 8px 16px;
     height: 48px;
     line-height: 2;
@@ -79,14 +73,11 @@ h1 {
     border-bottom: none;
 }
 
-/*
- * iframeコンテナ（スクロールをここに適用）
- */
 .iframe-container {
-    margin-top: 100px; /* ヘッダーの高さに合わせて調整 */
+    margin-top: 100px;
     width: 100%;
-    height: calc(100vh - 100px); /* ヘッダーの高さ分を引いて表示領域を確保 */
-    overflow-y: auto; /* このコンテナ内のみスクロール可能にする */
+    height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
 iframe {
@@ -95,9 +86,6 @@ iframe {
     border: none;
 }
 
-/*
- * レスポンシブデザイン
- */
 @media (max-width: 540px) {
     header {
         padding: 15px;
@@ -119,7 +107,7 @@ iframe {
         padding: 8px 15px;
         font-size: 13px;
         height: 40px;
-        flex: 0 0 calc((100% - 25px) / 6);
+        flex: 0 0 auto;
     }
     
     .iframe-container {
