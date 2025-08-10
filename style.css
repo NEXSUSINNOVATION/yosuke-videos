@@ -1,3 +1,6 @@
+/*
+ * 全体的なスタイル
+ */
 body {
     margin: 0;
     font-family: sans-serif;
@@ -35,6 +38,9 @@ h1 {
     background-color: transparent;
 }
 
+/*
+ * タブ（表示されていない時）
+ */
 .tab {
     width: 16.6%;
     padding: 8px 16px;
@@ -42,6 +48,9 @@ h1 {
     line-height: 2;
     font-weight: bold;
     border: 2px solid transparent;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-right-color: #fff;
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
@@ -53,18 +62,20 @@ h1 {
     text-overflow: ellipsis;
 }
 
+/*
+ * アクティブなタブ（表示されている時）
+ */
 .tab.active {
     height: 56px;
     font-size: 20px;
-    border: 2px solid #ffffff;
+    border: none;
     border-bottom: none;
     background-color: transparent;
 }
 
-.tab:not(.active) {
-    border-top: 2px solid transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
+.tab.active,
+.tab:hover {
+    color: #fff;
 }
 
 .iframe-container {
