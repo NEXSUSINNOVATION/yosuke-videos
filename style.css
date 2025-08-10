@@ -30,8 +30,8 @@ h1 {
 
 .tabs {
     display: flex;
-    justify-content: flex-start; /* 左寄せに変更 */
-    align-items: flex-end; /* 下に揃える */
+    justify-content: flex-start;
+    align-items: flex-end;
     flex-wrap: wrap;
     width: 100%;
     gap: 8px;
@@ -40,7 +40,8 @@ h1 {
 }
 
 .tab {
-    width: 16.6%;
+    /* flexプロパティを調整して横幅に収まるように変更 */
+    flex: 1;
     padding: 8px 16px;
     height: 48px;
     line-height: 2;
@@ -90,8 +91,8 @@ iframe {
     }
 
     .tabs {
-        justify-content: flex-start; /* 左寄せ */
-        align-items: flex-end; /* 下揃え */
+        justify-content: flex-start;
+        align-items: flex-end;
         gap: 5px;
         margin-bottom: 10px;
     }
