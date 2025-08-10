@@ -1,122 +1,119 @@
-/*
- * 全体的なスタイル
- */
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background-color: transparent;
-    color: #fff;
-    height: 100vh;
-    overflow: hidden;
-}
+/* * 全体的なスタイル 
+  */ 
+ body { 
+     margin: 0; 
+     font-family: sans-serif; 
+     background-color: transparent; 
+     color: #fff; 
+     height: 100vh; 
+     overflow: hidden; 
+ } 
 
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: transparent;
-    z-index: 10;
-    padding-top: 20px; /* 上部の余白を保持 */
-    box-shadow: none;
-    box-sizing: border-box;
-}
+ header { 
+     position: fixed; 
+     top: 0; 
+     left: 0; 
+     width: 100%; 
+     background: transparent; 
+     z-index: 10; 
+     padding-top: 20px; /* 上部の余白を保持 */ 
+     box-shadow: none; 
+     box-sizing: border-box; 
+ } 
 
-h1 {
-    display: none;
-}
+ h1 { 
+     display: none; 
+ } 
 
-.tabs {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 8px;
-    margin-bottom: 0; /* タブの下の余白をなくす */
-    background-color: transparent;
-}
+ .tabs { 
+     display: flex; 
+     justify-content: center; 
+     align-items: flex-end; 
+     flex-wrap: wrap; 
+     width: 100%; 
+     gap: 8px; 
+     margin-bottom: 0; /* タブの下の余白をなくす */ 
+     background-color: transparent; 
+ } 
 
-/*
- * タブ（アクティブでない時）
- */
-.tab {
-    flex: 0 0 calc(16.6% - 7px);
-    padding: 8px 16px;
-    height: 48px;
-    line-height: 2;
-    font-weight: bold;
-    background-color: #000;
-    color: #fff;
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-right: 2px solid #fff;
-    border-bottom: none;
-    border-radius: 5px 5px 0 0;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.3s ease;
-    font-size: 18px;
-    box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+ /* * タブ（アクティブでない時） 
+  */ 
+ .tab { 
+     flex: 0 0 calc(16.6% - 7px); 
+     padding: 8px 16px; 
+     height: 48px; 
+     line-height: 2; 
+     font-weight: bold; 
+     background-color: #000; 
+     color: #fff; 
+     border-top: 2px solid #fff; 
+     border-left: 2px solid #fff; 
+     border-right: 2px solid #fff; 
+     border-bottom: none; 
+     border-radius: 5px 5px 0 0; 
+     text-align: center; 
+     cursor: pointer; 
+     transition: 0.3s ease; 
+     font-size: 18px; /* text-size→18px */ 
+     box-sizing: border-box; 
+     white-space: nowrap; 
+     overflow: hidden; 
+     text-overflow: ellipsis; 
+ } 
 
-/*
- * アクティブなタブ
- */
-.tab.active {
-    height: 56px;
-    font-size: 20px;
-    background-color: #fff;
-    color: #000;
-    border-bottom: none;
-    border: 2px solid #fff;
-    border-radius: 5px 5px 0 0;
-}
+ /* * アクティブなタブ 
+  */ 
+ .tab.active { 
+     height: 56px; 
+     font-size: 20px; 
+     background-color: #fff; 
+     color: #000; 
+     border-bottom: none; 
+     border: 2px solid #fff; 
+     border-radius: 5px 5px 0 0; 
+ } 
 
-.iframe-container {
-    /* ヘッダーの高さとタブの高さを合計して調整 */
-    margin-top: calc(20px + 56px); 
-    width: 100%;
-    height: calc(100vh - (20px + 56px));
-    overflow-y: auto;
-    background-color: #ffffff;
-}
+ .iframe-container { 
+     /* ヘッダーの高さとタブの高さを合計して調整 */ 
+     margin-top: calc(20px + 56px);  
+     width: 100%; 
+     height: calc(100vh - (20px + 56px)); 
+     overflow-y: auto; 
+     background-color: #000; /* 背景色をブラックに変更 */
+ } 
 
-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
+ iframe { 
+     width: 100%; 
+     height: 100%; 
+     border: none; 
+ } 
 
-@media (max-width: 540px) {
-    header {
-        padding-top: 15px;
-    }
+ @media (max-width: 540px) { 
+     header { 
+         padding-top: 15px; 
+     } 
 
-    h1 {
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
+     h1 { 
+         font-size: 20px; 
+         margin-bottom: 10px; 
+     } 
 
-    .tabs {
-        justify-content: center;
-        align-items: flex-end;
-        gap: 5px;
-        margin-bottom: 0;
-    }
+     .tabs { 
+         justify-content: center; 
+         align-items: flex-end; 
+         gap: 5px; 
+         margin-bottom: 0; 
+     } 
 
-    .tab {
-        padding: 8px 15px;
-        font-size: 13px;
-        height: 40px;
-        flex: 0 0 calc((100% - 25px) / 6);
-    }
-    
-    .iframe-container {
-        margin-top: calc(15px + 40px);
-        height: calc(100vh - (15px + 40px));
-    }
-}
+     .tab { 
+         padding: 8px 15px; 
+         font-size: 13px; 
+         height: 40px; 
+         flex: 0 0 calc((100% - 25px) / 6); 
+     } 
+      
+     .iframe-container { 
+         margin-top: calc(15px + 40px); 
+         height: calc(100vh - (15px + 40px)); 
+     } 
+ }
