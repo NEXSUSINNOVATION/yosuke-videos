@@ -7,7 +7,6 @@ body {
     background-color: transparent;
     color: #fff;
     height: 100vh;
-    overflow: hidden; /* body全体のスクロールを無効にする */
 }
 
 header {
@@ -38,10 +37,10 @@ h1 {
 }
 
 /*
- * タブ（アクティブでない時）
+ * タブ（非アクティブ時）
  */
 .tab {
-    flex: 0 0 auto; /* 幅をコンテンツに合わせて自動調整 */
+    flex: 0 0 calc(16.6% - 7px);
     padding: 8px 16px;
     height: 48px;
     line-height: 2;
@@ -65,8 +64,8 @@ h1 {
  * アクティブなタブ
  */
 .tab.active {
-    height: 48px;
-    font-size: 18px;
+    height: 56px;
+    font-size: 20px;
     background-color: #fff;
     color: #000;
     border: 2px solid #fff;
@@ -77,7 +76,6 @@ h1 {
     margin-top: 100px;
     width: 100%;
     height: calc(100vh - 100px);
-    overflow-y: auto;
 }
 
 iframe {
@@ -107,7 +105,7 @@ iframe {
         padding: 8px 15px;
         font-size: 13px;
         height: 40px;
-        flex: 0 0 auto;
+        flex: 0 0 calc((100% - 25px) / 6);
     }
     
     .iframe-container {
