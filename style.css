@@ -37,7 +37,7 @@ h1 {
 }
 
 /*
- * タブ（アクティブでない時）
+ * タブ（アクティブ・非アクティブ共通）
  */
 .tab {
     flex: 0 0 calc(16.6% - 7px);
@@ -47,7 +47,8 @@ h1 {
     font-weight: bold;
     background-color: #000;
     color: #fff;
-    border: 2px solid #fff; /* ボーダーを上下左右すべてに表示 */
+    border: 2px solid #fff;
+    border-bottom: none; /* 下のボーダーを削除 */
     border-radius: 5px 5px 0 0;
     text-align: center;
     cursor: pointer;
@@ -60,15 +61,13 @@ h1 {
 }
 
 /*
- * アクティブなタブ
+ * アクティブなタブ（デザインは共通のため、ボーダー調整のみ）
  */
 .tab.active {
-    height: 48px;
-    font-size: 18px;
     background-color: #fff;
     color: #000;
     border: 2px solid #fff;
-    border-bottom: none; /* 下のボーダーをなくす */
+    border-bottom: none;
 }
 
 .iframe-container {
