@@ -7,45 +7,164 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>岩下ヨウスケの動画一覧</h1>
-        <div class="tabs">
-            <div class="tab active" data-url="https://pokepoke-list.netlify.app/">ポケポケ</div>
-            <div class="tab" data-url="https://kimetsu-list.netlify.app/">鬼滅の刃</div>
-            <div class="tab" data-url="https://horage-list.netlify.app/">ホラゲ</div>
-            <div class="tab" data-url="https://gyaruge-list.netlify.app/">ギャルゲ</div>
-            <div class="tab" data-url="https://vlog-list.netlify.app/">vlog</div>
-            <div class="tab" data-url="https://gachikoi-list.netlify.app/">ガチ恋</div>
+    <div class="header-container">
+        <h2 id="playlist-title"></h2>
+        <div class="search-sort-container">
+            <div class="search-container">
+                <input type="text" id="filterInput" placeholder="キーワードで絞り込み">
+            </div>
+            <div class="tabs">
+                <div class="tab active" data-sort="newest">新しい順</div>
+                <div class="tab" data-sort="popular">人気の動画</div>
+                <div class="tab" data-sort="oldest">古い順</div>
+            </div>
         </div>
-    </header>
-
-    <div class="iframe-container">
-        <iframe
-            id="dynamic-iframe"
-            src="https://pokepoke-list.netlify.app/"
-            width="100%"
-            height="100%"
-            style="border: none;"
-            loading="eager"
-            referrerpolicy="no-referrer"
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-        ></iframe>
+    </div>
+    
+    <div class="scroll-container">
+        <div id="videos" class="video-container">読み込み中...</div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabs = document.querySelectorAll('.tab');
-            const iframe = document.getElementById('dynamic-iframe');
+        const apiKey = 'AIzaSyDxj96_dc9nVMEb0SPsKLKvPSAVSJPLJ2Y';
+        const playlists = {
+            'pokepoke': 'PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu',
+            'kimetsu': 'PLJcsLRfvy0qiuoikIGJkgThqQJoxBxGxb',
+            'horage': 'PLJcsLRfvy0qiCIlUOG3mubH0WtkPiZTVq',
+            'vlog': 'PLJcsLRfvy0qjg1OP94iGRL4h8phsb-uYa',
+            'gachikoi': 'PLJcsLRfvy0qiDYCgCPtTB2NrWkaZ5iVud',
+            'gyaruge': 'PLJcsLRfvy0qjEv8XBBmZxPOIrzhbDyaiZ'
+        };
+        let videosData = [];
+        let currentSort = 'newest';
+        let currentKeyword = '';
+        let currentPlaylistId = playlists.pokepoke;
+        
+        async function fetchPlaylistVideos() {
+            try {
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${currentPlaylistId}&key=${apiKey}`);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                const data = await res.json();
+                return data.items;
+            } catch (error) {
+                console.error("Failed to fetch playlist items:", error);
+                document.getElementById("videos").innerHTML = "<p>動画の読み込みに失敗しました。APIキーを確認してください。</p>";
+                return [];
+            }
+        }
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelector('.tab.active').classList.remove('active');
-                    tab.classList.add('active');
-                    const url = tab.dataset.url;
-                    iframe.src = url;
+        async function fetchVideoStats(ids) {
+            if (ids.length === 0) return {};
+            try {
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids.join(',')}&key=${apiKey}`);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                const data = await res.json();
+                const map = {};
+                data.items.forEach(item => {
+                    map[item.id] = item.statistics;
+                });
+                return map;
+            } catch (error) {
+                console.error("Failed to fetch video statistics:", error);
+                return {};
+            }
+        }
+
+        async function fetchVideosWithStats() {
+            const playlistItems = await fetchPlaylistVideos();
+            if (playlistItems.length === 0) return [];
+
+            const ids = playlistItems.map(i => i.snippet.resourceId.videoId);
+            const stats = await fetchVideoStats(ids);
+
+            return playlistItems.map(item => {
+                const id = item.snippet.resourceId.videoId;
+                return {
+                    ...item,
+                    statistics: stats[id]
+                };
+            });
+        }
+
+        function sortVideos(videos, type) {
+            const sorted = [...videos];
+            if (type === 'newest') {
+                sorted.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
+            } else if (type === 'oldest') {
+                sorted.sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt));
+            } else if (type === 'popular') {
+                sorted.sort((a, b) => (parseInt(b.statistics?.viewCount || 0)) - (parseInt(a.statistics?.viewCount || 0)));
+            }
+            return sorted;
+        }
+
+        function filterVideos(videos, keyword) {
+            if (!keyword) return videos;
+            return videos.filter(item =>
+                item.snippet.title.toLowerCase().includes(keyword.toLowerCase())
+            );
+        }
+
+        function renderVideos() {
+            const container = document.getElementById("videos");
+            container.innerHTML = "";
+
+            const filtered = filterVideos(videosData, currentKeyword);
+            const sorted = sortVideos(filtered, currentSort);
+
+            if (sorted.length === 0) {
+                container.innerHTML = "<p style='text-align: center; color: #555;'>該当する動画がありません。</p>";
+                return;
+            }
+
+            sorted.forEach(item => {
+                const id = item.snippet.resourceId.videoId;
+                const title = item.snippet.title;
+                const card = document.createElement("a");
+                card.href = `https://www.youtube.com/watch?v=${id}`;
+                card.target = "_blank";
+                card.className = "video-card";
+                card.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>
+                    <div class="video-title">${title}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function updateTitle() {
+            const currentTabName = Object.keys(playlists).find(key => playlists[key] === currentPlaylistId);
+            const title = `${currentTabName}動画一覧`;
+            document.getElementById('playlist-title').textContent = title;
+        }
+
+        function setupTabs() {
+            document.querySelectorAll(".tab").forEach(tab => {
+                tab.addEventListener("click", () => {
+                    currentSort = tab.dataset.sort;
+                    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                    renderVideos();
                 });
             });
-        });
+        }
+
+        function setupSearch() {
+            document.getElementById("filterInput").addEventListener("input", (e) => {
+                currentKeyword = e.target.value;
+                renderVideos();
+            });
+        }
+
+        async function init() {
+            videosData = await fetchVideosWithStats();
+            renderVideos();
+            updateTitle();
+            setupTabs();
+            setupSearch();
+        }
+        
+        init();
     </script>
 </body>
 </html>
