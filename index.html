@@ -32,23 +32,16 @@
 
     <script>
         const apiKey = 'AIzaSyDxj96_dc9nVMEb0SPsKLKvPSAVSJPLJ2Y';
-        const playlistIdMap = {
-            'pokepoke': 'PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu',
-            'kimetsu': 'PLJcsLRfvy0qiuoikIGJkgThqQJoxBxGxb',
-            'horage': 'PLJcsLRfvy0qiCIlUOG3mubH0WtkPiZTVq',
-            'gyaruge': 'PLJcsLRfvy0qjEv8XBBmZxPOIrzhbDyaiZ',
-            'vlog': 'PLJcsLRfvy0qjg1OP94iGRL4h8phsb-uYa',
-            'gachikoi': 'PLJcsLRfvy0qiDYCgCPtTB2NrWkaZ5iVud'
-        };
-        
         let videosData = [];
         let currentSort = 'newest';
         let currentKeyword = '';
         let currentPlaylistId = 'PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu';
+        const isMobile = window.innerWidth <= 768;
 
         async function fetchVideos() {
             try {
-                const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${currentPlaylistId}&key=${apiKey}`);
+                const maxResults = isMobile ? 10 : 50;
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${currentPlaylistId}&key=${apiKey}`);
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const data = await res.json();
                 videosData = data.items;
@@ -65,29 +58,50 @@
             const filteredVideos = videosData.filter(item =>
                 item.snippet.title.toLowerCase().includes(currentKeyword.toLowerCase())
             );
-            
+
             const sortedVideos = filteredVideos.sort((a, b) => {
                 if (currentSort === 'newest') {
                     return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
                 } else if (currentSort === 'oldest') {
                     return new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt);
                 }
-                return 0; // 人気順は後ほど実装
+                return 0;
             });
 
             sortedVideos.forEach(item => {
                 const id = item.snippet.resourceId.videoId;
                 const title = item.snippet.title;
-                const card = document.createElement("a");
-                card.href = `https://www.youtube.com/watch?v=${id}`;
-                card.target = "_blank";
+                const thumbnail = item.snippet.thumbnails.medium.url;
+
+                const card = document.createElement("div");
                 card.className = "video-card";
-                card.innerHTML = `
-                    <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>
-                    <div class="video-title">${title}</div>
-                `;
+
+                if (isMobile) {
+                    card.innerHTML = `
+                        <div class="video-thumb" data-video-id="${id}">
+                            <img src="${thumbnail}" alt="${title}">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="video-title">${title}</div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>
+                        <div class="video-title">${title}</div>
+                    `;
+                }
+
                 container.appendChild(card);
             });
+
+            if (isMobile) {
+                document.querySelectorAll(".video-thumb").forEach(thumb => {
+                    thumb.addEventListener("click", function () {
+                        const vid = this.dataset.videoId;
+                        this.outerHTML = `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1" allowfullscreen></iframe>`;
+                    });
+                });
+            }
         }
 
         function setupEventListeners() {
@@ -99,7 +113,7 @@
                     fetchVideos();
                 });
             });
-            
+
             document.querySelectorAll('.sort-tab').forEach(sortTab => {
                 sortTab.addEventListener('click', () => {
                     document.querySelector('.sort-tab.active').classList.remove('active');
@@ -108,13 +122,13 @@
                     renderVideos();
                 });
             });
-            
+
             document.getElementById('filterInput').addEventListener('input', (e) => {
                 currentKeyword = e.target.value;
                 renderVideos();
             });
         }
-        
+
         document.addEventListener('DOMContentLoaded', () => {
             setupEventListeners();
             fetchVideos();
