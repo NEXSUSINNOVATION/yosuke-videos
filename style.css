@@ -1,226 +1,124 @@
+/* ===== PC共通デザイン ===== */
 body {
     margin: 0;
+    padding: 0;
     font-family: sans-serif;
-    background-color: transparent;
+    background-color: #000;
     color: #fff;
-    height: 100vh;
-    overflow: hidden;
 }
 
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: transparent;
-    z-index: 10;
-    padding-top: 20px;
-    box-shadow: none;
-    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
 }
 
-h1 {
-    display: none;
-}
-
-.tabs {
+.tabs, .sort-tabs {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
     flex-wrap: wrap;
-    width: 100%;
     gap: 8px;
-    margin-bottom: 0;
-    background-color: transparent;
+    margin-bottom: 15px;
 }
 
-.tab {
-    flex: 0 0 calc(16.6% - 7px);
-    padding: 8px 16px;
-    height: 48px;
-    line-height: 2;
-    font-weight: bold;
+.tab, .sort-tab {
+    padding: 8px 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 999px;
+    border: 2px solid #fff;
     background-color: #000;
     color: #fff;
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-right: 2px solid #fff;
-    border-bottom: none;
-    border-radius: 5px 5px 0 0;
-    text-align: center;
     cursor: pointer;
-    transition: 0.3s ease;
-    font-size: 18px;
-    box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.tab.active {
-    height: 56px;
-    font-size: 20px;
+.tab.active, .sort-tab.active {
     background-color: #fff;
     color: #000;
-    border-bottom: none;
     border: 2px solid #fff;
-    border-radius: 5px 5px 0 0;
 }
 
 .iframe-container {
-    margin-top: calc(20px + 56px);
     width: 100%;
-    height: calc(100vh - (20px + 56px));
-    overflow-y: auto;
-    background-color: #00000000;
-    border-top: 2px solid #fff;
-    border-left: 2px solid #fff;
-    border-right: 2px solid #fff;
-    border-bottom: 2px solid #fff;
-}
-
-.search-sort-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-top: 20px;
-}
-
-#filterInput {
-    padding: 10px;
-    width: 80%;
-    max-width: 400px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-}
-
-.sort-tabs {
-    display: flex;
-    gap: 10px;
-}
-
-.sort-tab {
-    padding: 8px 16px;
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.sort-tab.active {
-    background-color: #fff;
-    color: #000;
+    height: calc(100vh - 100px);
 }
 
 .video-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 20px;
+    gap: 10px;
 }
 
 .video-card {
-    flex: 0 0 calc(25% - 15px);
-    background-color: transparent;
+    background-color: #111;
+    padding: 10px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
-    transition: transform 0.2s ease;
-    text-decoration: none;
-    color: inherit;
-}
-
-.video-card:hover {
-    transform: scale(1.02);
 }
 
 .video-card iframe {
     width: 100%;
-    height: 180px;
+    height: 300px;
     border: none;
 }
 
-.video-title {
-    padding: 10px;
-    font-size: 14px;
-    color: #fff;
-}
-
-/* サムネイル共通 */
-.video-thumb {
-    position: relative;
-    cursor: pointer;
-}
-
-.video-thumb img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    font-size: 30px;
-    padding: 10px 20px;
-    border-radius: 50%;
-}
-
-/* レスポンシブ：中画面 */
-@media (max-width: 1000px) {
-    .video-container {
-        flex: 0 0 calc(50% - 10px);
-    }
-}
-
-/* レスポンシブ：モバイル（横スクロールタブに変更） */
+/* ===== モバイル対応デザイン ===== */
 @media (max-width: 540px) {
     header {
         padding-top: 15px;
     }
 
+    /* 上部カテゴリタブ（横スクロール対応） */
     .tabs {
         display: flex;
         overflow-x: auto;
         white-space: nowrap;
         gap: 8px;
-        padding: 0 10px;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE/Edge */
+        padding: 5px 10px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
     .tabs::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
+        display: none;
     }
 
-    .tab {
-        flex: 0 0 auto; /* 幅固定しない */
+    /* 下部ソートタブ（横スクロール対応） */
+    .sort-tabs {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 8px;
+        padding: 5px 10px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .sort-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* タブ共通デザイン（カテゴリ・ソート両方） */
+    .tab, .sort-tab {
+        flex: 0 0 auto;
         padding: 8px 20px;
         font-size: 14px;
-        height: auto;
         line-height: 1.5;
         border-radius: 999px;
+        border: 2px solid #fff;
+        background-color: #000;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .tab.active, .sort-tab.active {
         background-color: #fff;
         color: #000;
-        border: none;
+        border: 2px solid #fff;
     }
 
-    .tab.active {
-        background-color: #1e3a5f;
-        color: #fff;
-    }
-
+    /* iframeコンテナに余白を足して干渉防止 */
     .iframe-container {
-        margin-top: 15px;
-        height: calc(100vh - 15px);
+        margin-top: 60px;
+        height: calc(100vh - 60px);
     }
 
     .video-container {
