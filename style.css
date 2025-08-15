@@ -147,7 +147,7 @@ h1 {
     color: #fff;
 }
 
-/* モバイル用サムネイル */
+/* サムネイル共通 */
 .video-thumb {
     position: relative;
     cursor: pointer;
