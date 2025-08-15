@@ -1,3 +1,4 @@
+/* PC版は変更なし */
 body {
     margin: 0;
     font-family: sans-serif;
@@ -191,7 +192,7 @@ h1 {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: 5px;
+        gap: 8px; /* 適切なギャップを設定 */
         margin-bottom: 0;
         overflow-x: auto; /* 横スクロールを可能にする */
         white-space: nowrap; /* タブの折り返しを禁止 */
@@ -219,15 +220,12 @@ h1 {
         transition: 0.3s ease;
         font-size: 16px;
         box-sizing: border-box;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .tab.active {
-        background-color: #27374D; /* 選択時はダークブルーの背景 */
-        color: #fff;
-        border: 2px solid #27374D; /* 選択時は背景色に合わせた枠線 */
+        background-color: #fff; /* 選択時は白い背景 */
+        color: #000; /* 選択時は黒いテキスト */
+        border: 2px solid #fff; /* 選択時は背景色に合わせた枠線 */
         height: 40px;
         font-size: 16px;
         border-radius: 20px;
