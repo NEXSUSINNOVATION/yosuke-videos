@@ -1,3 +1,4 @@
+/* PC版は変更なし */
 body {
     margin: 0;
     font-family: sans-serif;
@@ -86,11 +87,6 @@ h1 {
     gap: 15px;
     margin-bottom: 20px;
     padding-top: 20px;
-    position: fixed; /* ここを追加 */
-    top: 0; /* ここを追加 */
-    width: 100%; /* ここを追加 */
-    z-index: 9; /* ここを追加 */
-    background-color: #000; /* ここを追加 (背景色を黒に設定) */
 }
 
 #filterInput {
@@ -241,7 +237,7 @@ h1 {
         height: calc(100vh - (15px + 40px));
         overflow-y: auto;
         background-color: #00000000;
-        border: none;
+        border: none; /* ここを変更しました */
     }
 
     .video-container {
