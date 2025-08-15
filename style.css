@@ -237,10 +237,7 @@ h1 {
         height: calc(100vh - (15px + 40px));
         overflow-y: auto;
         background-color: #00000000;
-        border-top: none; /* 上部の線を削除 */
-        border-left: 2px solid #fff;
-        border-right: 2px solid #fff;
-        border-bottom: 2px solid #fff;
+        
     }
 
     .video-container {
