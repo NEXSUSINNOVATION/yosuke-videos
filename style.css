@@ -237,7 +237,6 @@ h1 {
         height: calc(100vh - (15px + 40px));
         overflow-y: auto;
         background-color: #00000000;
-        
     }
 
     .video-container {
