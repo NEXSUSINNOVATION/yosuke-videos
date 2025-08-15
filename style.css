@@ -1,4 +1,4 @@
-/* ===== PC共通デザイン ===== */
+/* ===== 共通（元デザインを保持） ===== */
 body {
     margin: 0;
     padding: 0;
@@ -21,54 +21,16 @@ header {
 }
 
 .tab, .sort-tab {
-    padding: 8px 20px;
+    /* 元のタブデザインをそのまま使用 */
+    padding: 8px 15px;
     font-size: 14px;
-    line-height: 1.5;
-    border-radius: 999px;
-    border: 2px solid #fff;
-    background-color: #000;
-    color: #fff;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.tab.active, .sort-tab.active {
-    background-color: #fff;
-    color: #000;
-    border: 2px solid #fff;
-}
-
-.iframe-container {
-    width: 100%;
-    height: calc(100vh - 100px);
-}
-
-.video-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.video-card {
-    background-color: #111;
-    padding: 10px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.video-card iframe {
-    width: 100%;
-    height: 300px;
-    border: none;
-}
-
-/* ===== モバイル対応デザイン ===== */
+/* ===== モバイル専用デザイン ===== */
 @media (max-width: 540px) {
-    header {
-        padding-top: 15px;
-    }
-
-    /* 上部カテゴリタブ（横スクロール対応） */
+    /* 上部カテゴリタブ（横スクロール） */
     .tabs {
         display: flex;
         overflow-x: auto;
@@ -82,7 +44,7 @@ header {
         display: none;
     }
 
-    /* 下部ソートタブ（横スクロール対応） */
+    /* 下部ソートタブ（横スクロール） */
     .sort-tabs {
         display: flex;
         overflow-x: auto;
@@ -96,7 +58,7 @@ header {
         display: none;
     }
 
-    /* タブ共通デザイン（カテゴリ・ソート両方） */
+    /* モバイル時のみタブデザイン統一 */
     .tab, .sort-tab {
         flex: 0 0 auto;
         padding: 8px 20px;
@@ -115,18 +77,10 @@ header {
         border: 2px solid #fff;
     }
 
-    /* iframeコンテナに余白を足して干渉防止 */
+    /* iframeコンテナ干渉防止 */
     .iframe-container {
         margin-top: 60px;
         height: calc(100vh - 60px);
-    }
-
-    .video-container {
-        flex: 0 0 100%;
-    }
-
-    .video-card {
-        flex: 0 0 100%;
     }
 
     .video-card iframe {
