@@ -189,19 +189,19 @@ h1 {
 
     .tabs {
         display: flex;
-        justify-content: flex-start; /* 左寄せにしてスクロールを自然にする */
+        justify-content: flex-start;
         align-items: center;
         gap: 5px;
         margin-bottom: 0;
         overflow-x: auto; /* 横スクロールを可能にする */
-        white-space: nowrap; /* タブが折り返さないようにする */
-        -webkit-overflow-scrolling: touch; /* iOSで滑らかなスクロールを可能にする */
+        white-space: nowrap; /* タブの折り返しを禁止 */
+        -webkit-overflow-scrolling: touch; /* iOSでのスムーズなスクロール */
         background-color: transparent;
-        padding-bottom: 5px; /* スクロールバーのためのスペース */
     }
 
+    /* スクロールバーを非表示にする */
     .tabs::-webkit-scrollbar {
-        display: none; /* スクロールバーを非表示にする */
+        display: none;
     }
 
     .tab {
@@ -228,6 +228,9 @@ h1 {
         background-color: #27374D; /* 選択時はダークブルーの背景 */
         color: #fff;
         border: 2px solid #27374D; /* 選択時は背景色に合わせた枠線 */
+        height: 40px;
+        font-size: 16px;
+        border-radius: 20px;
     }
 
     .iframe-container {
@@ -236,7 +239,7 @@ h1 {
         height: calc(100vh - (15px + 40px));
         overflow-y: auto;
         background-color: #00000000;
-        border-top: 2px solid #fff;
+        border-top: none; /* 上部の線を削除 */
         border-left: 2px solid #fff;
         border-right: 2px solid #fff;
         border-bottom: 2px solid #fff;
