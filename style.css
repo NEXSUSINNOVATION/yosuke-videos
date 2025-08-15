@@ -189,35 +189,35 @@ h1 {
 
     .tabs {
         display: flex;
-        justify-content: flex-start;
-        align-items: flex-end;
+        justify-content: flex-start; /* 左寄せにしてスクロールを自然にする */
+        align-items: center;
         gap: 5px;
         margin-bottom: 0;
-        overflow-x: auto;
-        white-space: nowrap;
+        overflow-x: auto; /* 横スクロールを可能にする */
+        white-space: nowrap; /* タブが折り返さないようにする */
+        -webkit-overflow-scrolling: touch; /* iOSで滑らかなスクロールを可能にする */
         background-color: transparent;
-        padding-bottom: 10px; /* Optional: Add some padding to the bottom of the scrollable area */
+        padding-bottom: 5px; /* スクロールバーのためのスペース */
     }
 
-    /* Hide the scrollbar for a cleaner look */
     .tabs::-webkit-scrollbar {
-        display: none;
+        display: none; /* スクロールバーを非表示にする */
     }
 
     .tab {
-        flex: 0 0 auto; /* Allow the button width to be determined by its content */
-        padding: 8px 16px; /* Slightly adjust padding for a better look */
+        flex: 0 0 auto; /* ボタンの幅をコンテンツに合わせる */
+        padding: 8px 16px;
         height: 40px;
         line-height: 1.5;
         font-weight: bold;
-        background-color: transparent;
+        background-color: transparent; /* 非選択時は背景なし */
         color: #fff;
-        border: 2px solid #fff;
-        border-radius: 20px; /* Rounded corners for the button shape */
+        border: 2px solid #fff; /* 枠線は白 */
+        border-radius: 20px; /* 角丸のボタン形状 */
         text-align: center;
         cursor: pointer;
         transition: 0.3s ease;
-        font-size: 16px; /* Slightly smaller font size */
+        font-size: 16px;
         box-sizing: border-box;
         white-space: nowrap;
         overflow: hidden;
@@ -225,27 +225,25 @@ h1 {
     }
 
     .tab.active {
-        height: 40px;
-        font-size: 16px;
-        background-color: #27374D; /* Dark blue color from the image */
+        background-color: #27374D; /* 選択時はダークブルーの背景 */
         color: #fff;
-        border: 2px solid #27374D; /* Change border color to match background */
+        border: 2px solid #27374D; /* 選択時は背景色に合わせた枠線 */
     }
 
     .iframe-container {
         margin-top: calc(15px + 40px);
+        width: 100%;
         height: calc(100vh - (15px + 40px));
-        border-top: none; /* Remove the top border to connect to the button row */
+        overflow-y: auto;
+        background-color: #00000000;
+        border-top: 2px solid #fff;
         border-left: 2px solid #fff;
         border-right: 2px solid #fff;
         border-bottom: 2px solid #fff;
     }
 
     .video-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        padding: 20px;
+        flex: 0 0 100%;
     }
 
     .video-card {
