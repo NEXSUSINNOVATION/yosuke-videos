@@ -1,89 +1,113 @@
-<div id="video-container"></div>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>動画一覧</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="tabs">
+            <div class="tab active" data-playlist="PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu">ポケポケ</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qiuoikIGJkgThqQJoxBxGxb">鬼滅の刃</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qiCIlUOG3mubH0WtkPiZTVq">ホラゲ</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qjEv8XBBmZxPOIrzhbDyaiZ">ギャルゲ</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qjg1OP94iGRL4h8phsb-uYa">vlog</div>
+            <div class="tab" data-playlist="PLJcsLRfvy0qiDYCgCPtTB2NrWkaZ5iVud">ガチ恋</div>
+        </div>
+    </header>
 
-<script>
-const API_KEY = "AIzaSyDxj96_dc9nVMEb0SPsKLKvPSAVSJPLJ2Y";
-const PLAYLIST_ID = "PLJcsLRfvy0qjg1OP94iGRL4h8phsb-uYa";
-const MAX_RESULTS = 6;
+    <div class="iframe-container">
+        <div class="search-sort-container">
+            <input type="text" id="filterInput" placeholder="キーワードで絞り込み">
+            <div class="sort-tabs">
+                <div class="sort-tab active" data-sort="newest">新しい順</div>
+                <div class="sort-tab" data-sort="oldest">古い順</div>
+            </div>
+        </div>
+        <div id="videos" class="video-container">読み込み中...</div>
+    </div>
 
-const apiUrl = `https://www.googleapis.com/youtube/v3/playlistItems?key=${API_KEY}&playlistId=${PLAYLIST_ID}&part=snippet&maxResults=${MAX_RESULTS}`;
+    <script>
+        const apiKey = '【あなたのYouTube APIキー】';
+        let videosData = [];
+        let currentSort = 'newest';
+        let currentKeyword = '';
+        let currentPlaylistId = 'PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu';
 
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-    if (data.items) {
-      const container = document.getElementById("video-container");
-      data.items.forEach(item => {
-        const videoId = item.snippet.resourceId.videoId;
+        async function fetchVideos() {
+            try {
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${currentPlaylistId}&key=${apiKey}`);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                const data = await res.json();
+                videosData = data.items;
+                renderVideos();
+            } catch (error) {
+                console.error("Failed to fetch playlist items:", error);
+                document.getElementById("videos").innerHTML = "<p>動画の読み込みに失敗しました。</p>";
+            }
+        }
 
-        const videoBox = document.createElement("div");
-        videoBox.className = "video-box";
-        videoBox.innerHTML = `
-          <iframe 
-            src="https://www.youtube.com/embed/${videoId}" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-          </iframe>
-        `;
-        container.appendChild(videoBox);
-      });
-    }
-  })
-  .catch(err => console.error(err));
-</script>
+        function renderVideos() {
+            const container = document.getElementById("videos");
+            container.innerHTML = "";
+            const filteredVideos = videosData.filter(item =>
+                item.snippet.title.toLowerCase().includes(currentKeyword.toLowerCase())
+            );
+            const sortedVideos = filteredVideos.sort((a, b) => {
+                if (currentSort === 'newest') {
+                    return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
+                } else if (currentSort === 'oldest') {
+                    return new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt);
+                }
+                return 0;
+            });
 
-<style>
-#video-container {
-  width: 100%;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  background: transparent;
-}
+            sortedVideos.forEach(item => {
+                const id = item.snippet.resourceId.videoId;
+                const title = item.snippet.title;
+                const card = document.createElement("a");
+                card.href = `https://www.youtube.com/watch?v=${id}`;
+                card.target = "_blank";
+                card.className = "video-card";
+                card.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>
+                    <div class="video-title">${title}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
 
-.video-box {
-  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border-radius: 8px;
-  overflow: hidden;
-}
+        function setupEventListeners() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelector('.tab.active').classList.remove('active');
+                    tab.classList.add('active');
+                    currentPlaylistId = tab.dataset.playlist;
+                    fetchVideos();
+                });
+            });
 
-.video-box:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
-}
+            document.querySelectorAll('.sort-tab').forEach(sortTab => {
+                sortTab.addEventListener('click', () => {
+                    document.querySelector('.sort-tab.active').classList.remove('active');
+                    sortTab.classList.add('active');
+                    currentSort = sortTab.dataset.sort;
+                    renderVideos();
+                });
+            });
 
-.video-box iframe {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  display: block;
-}
+            document.getElementById('filterInput').addEventListener('input', (e) => {
+                currentKeyword = e.target.value;
+                renderVideos();
+            });
+        }
 
-/* ブレイクポイント */
-@media (max-width: 1280px) {
-  #video-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 1140px) {
-  #video-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 840px) {
-  #video-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 540px) {
-  #video-container {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 320px) {
-  #video-container {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            fetchVideos();
+        });
+    </script>
+</body>
+</html>
