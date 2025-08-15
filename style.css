@@ -1,3 +1,4 @@
+/* PC版は変更なし */
 body {
     margin: 0;
     font-family: sans-serif;
@@ -193,28 +194,27 @@ h1 {
         align-items: center;
         gap: 8px;
         margin-bottom: 0;
-        overflow-x: auto; /* 横スクロールを可能にする */
-        white-space: nowrap; /* タブの折り返しを禁止 */
-        -webkit-overflow-scrolling: touch; /* iOSでのスムーズなスクロール */
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
         background-color: transparent;
-        flex-wrap: nowrap; /* 明示的に折り返しを無効化 */
+        flex-wrap: nowrap;
     }
 
-    /* スクロールバーを非表示にする */
     .tabs::-webkit-scrollbar {
         display: none;
     }
 
     .tab {
-        flex: 0 0 auto; /* ボタンの幅をコンテンツに合わせる */
+        flex: 0 0 auto;
         padding: 8px 16px;
         height: 40px;
         line-height: 1.5;
         font-weight: bold;
-        background-color: transparent; /* 非選択時は背景なし */
+        background-color: transparent;
         color: #fff;
-        border: 2px solid #fff; /* 枠線は白 */
-        border-radius: 20px; /* 角丸のボタン形状 */
+        border: 2px solid #fff;
+        border-radius: 20px;
         text-align: center;
         cursor: pointer;
         transition: 0.3s ease;
@@ -223,9 +223,9 @@ h1 {
     }
 
     .tab.active {
-        background-color: #fff; /* 選択時は白い背景 */
-        color: #000; /* 選択時は黒いテキスト */
-        border: 2px solid #fff; /* 選択時は背景色に合わせた枠線 */
+        background-color: #fff;
+        color: #000;
+        border: 2px solid #fff;
         height: 40px;
         font-size: 16px;
         border-radius: 20px;
@@ -237,6 +237,7 @@ h1 {
         height: calc(100vh - (15px + 40px));
         overflow-y: auto;
         background-color: #00000000;
+        border: none; /* ここを変更しました */
     }
 
     .video-container {
