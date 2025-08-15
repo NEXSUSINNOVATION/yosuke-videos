@@ -23,6 +23,7 @@
             <input type="text" id="filterInput" placeholder="キーワードで絞り込み">
             <div class="sort-tabs">
                 <div class="sort-tab active" data-sort="newest">新しい順</div>
+                <div class="sort-tab" data-sort="popular">人気の動画</div>
                 <div class="sort-tab" data-sort="oldest">古い順</div>
             </div>
         </div>
@@ -30,15 +31,17 @@
     </div>
 
     <script>
-        const apiKey = '【あなたのYouTube APIキー】';
+        const apiKey = 'AIzaSyDxj96_dc9nVMEb0SPsKLKvPSAVSJPLJ2Y';
         let videosData = [];
         let currentSort = 'newest';
         let currentKeyword = '';
         let currentPlaylistId = 'PLJcsLRfvy0qiGZWA2kdYlQL8fiSA_AXGu';
+        const isMobile = window.innerWidth <= 768;
 
         async function fetchVideos() {
             try {
-                const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${currentPlaylistId}&key=${apiKey}`);
+                const maxResults = isMobile ? 10 : 50;
+                const res = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${currentPlaylistId}&key=${apiKey}`);
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 const data = await res.json();
                 videosData = data.items;
@@ -55,6 +58,7 @@
             const filteredVideos = videosData.filter(item =>
                 item.snippet.title.toLowerCase().includes(currentKeyword.toLowerCase())
             );
+
             const sortedVideos = filteredVideos.sort((a, b) => {
                 if (currentSort === 'newest') {
                     return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
@@ -67,16 +71,37 @@
             sortedVideos.forEach(item => {
                 const id = item.snippet.resourceId.videoId;
                 const title = item.snippet.title;
-                const card = document.createElement("a");
-                card.href = `https://www.youtube.com/watch?v=${id}`;
-                card.target = "_blank";
+                const thumbnail = item.snippet.thumbnails.medium.url;
+
+                const card = document.createElement("div");
                 card.className = "video-card";
-                card.innerHTML = `
-                    <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>
-                    <div class="video-title">${title}</div>
-                `;
+
+                if (isMobile) {
+                    card.innerHTML = `
+                        <div class="video-thumb" data-video-id="${id}">
+                            <img src="${thumbnail}" alt="${title}">
+                            <div class="play-button">▶</div>
+                        </div>
+                        <div class="video-title">${title}</div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>
+                        <div class="video-title">${title}</div>
+                    `;
+                }
+
                 container.appendChild(card);
             });
+
+            if (isMobile) {
+                document.querySelectorAll(".video-thumb").forEach(thumb => {
+                    thumb.addEventListener("click", function () {
+                        const vid = this.dataset.videoId;
+                        this.outerHTML = `<iframe src="https://www.youtube.com/embed/${vid}?autoplay=1" allowfullscreen></iframe>`;
+                    });
+                });
+            }
         }
 
         function setupEventListeners() {
