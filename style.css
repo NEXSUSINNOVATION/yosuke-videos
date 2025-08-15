@@ -73,6 +73,7 @@ h1 {
     height: calc(100vh - (20px + 56px));
     overflow-y: auto;
     background-color: #00000000;
+    border-top: 2px solid #fff;
     border-left: 2px solid #fff;
     border-right: 2px solid #fff;
     border-bottom: 2px solid #fff;
