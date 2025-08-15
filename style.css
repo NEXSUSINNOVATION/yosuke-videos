@@ -175,35 +175,52 @@ h1 {
     border-radius: 50%;
 }
 
-/* レスポンシブ */
+/* レスポンシブ：中画面 */
 @media (max-width: 1000px) {
     .video-container {
         flex: 0 0 calc(50% - 10px);
     }
 }
 
+/* レスポンシブ：モバイル（横スクロールタブに変更） */
 @media (max-width: 540px) {
     header {
         padding-top: 15px;
     }
 
     .tabs {
-        justify-content: center;
-        align-items: flex-end;
-        gap: 5px;
-        margin-bottom: 0;
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 8px;
+        padding: 0 10px;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+    .tabs::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
     }
 
     .tab {
-        padding: 8px 15px;
-        font-size: 13px;
-        height: 40px;
-        flex: 0 0 calc((100% - 25px) / 6);
+        flex: 0 0 auto; /* 幅固定しない */
+        padding: 8px 20px;
+        font-size: 14px;
+        height: auto;
+        line-height: 1.5;
+        border-radius: 999px;
+        background-color: #fff;
+        color: #000;
+        border: none;
+    }
+
+    .tab.active {
+        background-color: #1e3a5f;
+        color: #fff;
     }
 
     .iframe-container {
-        margin-top: calc(15px + 40px);
-        height: calc(100vh - (15px + 40px));
+        margin-top: 15px;
+        height: calc(100vh - 15px);
     }
 
     .video-container {
