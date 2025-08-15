@@ -188,26 +188,64 @@ h1 {
     }
 
     .tabs {
-        justify-content: center;
+        display: flex;
+        justify-content: flex-start;
         align-items: flex-end;
         gap: 5px;
         margin-bottom: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        background-color: transparent;
+        padding-bottom: 10px; /* Optional: Add some padding to the bottom of the scrollable area */
+    }
+
+    /* Hide the scrollbar for a cleaner look */
+    .tabs::-webkit-scrollbar {
+        display: none;
     }
 
     .tab {
-        padding: 8px 15px;
-        font-size: 13px;
+        flex: 0 0 auto; /* Allow the button width to be determined by its content */
+        padding: 8px 16px; /* Slightly adjust padding for a better look */
         height: 40px;
-        flex: 0 0 calc((100% - 25px) / 6);
+        line-height: 1.5;
+        font-weight: bold;
+        background-color: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        border-radius: 20px; /* Rounded corners for the button shape */
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s ease;
+        font-size: 16px; /* Slightly smaller font size */
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .tab.active {
+        height: 40px;
+        font-size: 16px;
+        background-color: #27374D; /* Dark blue color from the image */
+        color: #fff;
+        border: 2px solid #27374D; /* Change border color to match background */
     }
 
     .iframe-container {
         margin-top: calc(15px + 40px);
         height: calc(100vh - (15px + 40px));
+        border-top: none; /* Remove the top border to connect to the button row */
+        border-left: 2px solid #fff;
+        border-right: 2px solid #fff;
+        border-bottom: 2px solid #fff;
     }
 
     .video-container {
-        flex: 0 0 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 20px;
     }
 
     .video-card {
